@@ -1,11 +1,11 @@
 name: rebuild-manifest
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths-ignore:
       - public-manifest.json
-      - .github/workflows/rebuild-manifest.yml
 
 permissions:
   contents: write
