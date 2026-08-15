@@ -33061,7 +33061,7 @@ run(function()
                     pcall(function()
                         local chatEvents = replicatedStorage:FindFirstChild('DefaultChatSystemChatEvents')
                         if chatEvents then
-                            chatEvents.SayMessageRequest:FireServer('\8203', 'All')
+                            chatEvents.SayMessageRequest:FireServer('\226\128\139', 'All')
                         end
                     end)
                 end
