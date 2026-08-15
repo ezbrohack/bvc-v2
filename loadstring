@@ -1,0 +1,5 @@
+local chunk, loadError = loadstring(game:HttpGet('https://raw.githubusercontent.com/ezbrohack/bvc-v2/main/bootstrap.lua'), '@bvc/bootstrap')
+if type(chunk) ~= 'function' then
+	error(loadError or 'BVC bootstrap rejected', 0)
+end
+return chunk()

@@ -1,0 +1,18 @@
+# BVC is a free, unofficial rebuild. Public runtime files are committed;
+# only per-user runtime state stays out of the repository.
+
+# Runtime/customer state is never part of the public repository.
+cache/
+profiles/*
+!profiles/2619619496.gui.txt
+!profiles/blatant6872265039.txt
+!profiles/blatant6872274481.txt
+!profiles/default6872265039.txt
+!profiles/default6872274481.txt
+!profiles/features.json
+!profiles/gui.txt
+!profiles/packages.json
+
+# Retired UI leftovers from older workspaces.
+guis/rise.lua
+assets/rise/
