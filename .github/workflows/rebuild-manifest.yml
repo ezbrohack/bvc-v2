@@ -1,0 +1,35 @@
+name: rebuild-manifest
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - public-manifest.json
+      - .github/workflows/rebuild-manifest.yml
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Regenerate public-manifest.json
+        run: pwsh -NoProfile -ExecutionPolicy Bypass -File .github/rebuild-manifest.ps1 -Repo (Get-Location).Path
+        shell: pwsh
+
+      - name: Commit manifest if changed
+        run: |
+          git add public-manifest.json
+          if (git diff --cached --quiet) {
+            Write-Output "manifest unchanged"
+            exit 0
+          }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: rebuild public-manifest.json"
+          git push
+          Write-Output "manifest updated and pushed"
+        shell: pwsh
