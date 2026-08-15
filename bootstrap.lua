@@ -1,6 +1,5 @@
 --!nocheck
 -- Compact public bootstrap with an executor-request fallback.
--- (ci: auto-rebuild smoke test)
 
 local requestedReleaseRef = ...
 
