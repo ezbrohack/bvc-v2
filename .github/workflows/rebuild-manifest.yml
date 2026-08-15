@@ -23,13 +23,17 @@ jobs:
       - name: Commit manifest if changed
         run: |
           git add public-manifest.json
-          if (git diff --cached --quiet) {
+          git diff --cached --quiet
+          if ($LASTEXITCODE -eq 0) {
             Write-Output "manifest unchanged"
             exit 0
           }
+          Write-Output "manifest CHANGED:"
+          git diff --cached --stat
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "chore: rebuild public-manifest.json"
+          git pull --rebase
           git push
           Write-Output "manifest updated and pushed"
         shell: pwsh
