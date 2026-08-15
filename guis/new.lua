@@ -1126,7 +1126,7 @@ components = {
 		title.Name = 'Title'
 		title.Size = UDim2.new(1, 0, 0, 29)
 		title.BackgroundTransparency = 1
-		title.Text = '?듼듼듼듼듼듼듼듼?..optionsettings.Name..' - '..optionapi.Value
+		title.Text = '         '..optionsettings.Name..' - '..optionapi.Value
 		title.TextXAlignment = Enum.TextXAlignment.Left
 		title.TextColor3 = color.Dark(uipallet.Text, 0.16)
 		title.TextSize = 13
@@ -1165,7 +1165,7 @@ components = {
 		
 		function optionapi:SetValue(val, mouse)
 			self.Value = table.find(optionsettings.List, val) and val or optionsettings.List[1] or 'None'
-			title.Text = '?듼듼듼듼듼듼듼듼?..optionsettings.Name..' - '..self.Value
+			title.Text = '         '..optionsettings.Name..' - '..self.Value
 			if dropdownchildren then
 				arrow.Rotation = 90
 				dropdownchildren:Destroy()
@@ -1195,7 +1195,7 @@ components = {
 					dropdownoption.BackgroundColor3 = uipallet.Main
 					dropdownoption.BorderSizePixel = 0
 					dropdownoption.AutoButtonColor = false
-					dropdownoption.Text = '?듼듼듼듼듼듼듼듼?..v
+					dropdownoption.Text = '         '..v
 					dropdownoption.TextXAlignment = Enum.TextXAlignment.Left
 					dropdownoption.TextColor3 = color.Dark(uipallet.Text, 0.16)
 					dropdownoption.TextSize = 13
@@ -2236,7 +2236,7 @@ components = {
 		toggle.BorderSizePixel = 0
 		toggle.AutoButtonColor = false
 		toggle.Visible = optionsettings.Visible == nil or optionsettings.Visible
-		toggle.Text = '?듼듼듼듼듼듼듼듼듼?..optionsettings.Name
+		toggle.Text = '          '..optionsettings.Name
 		toggle.TextXAlignment = Enum.TextXAlignment.Left
 		toggle.TextColor3 = color.Dark(uipallet.Text, 0.16)
 		toggle.TextSize = 14
@@ -2546,6 +2546,13 @@ components = {
 		return optionapi
 	end,
 	Divider = function(children, text)
+		-- Component factories are exposed through two calling conventions:
+		-- direct calls pass (parent, label), while the generic Create* wrapper
+		-- passes (label, parent, category). Normalize before parenting.
+		if typeof(children) ~= 'Instance' and typeof(text) == 'Instance' then
+			children, text = text, children
+		end
+		if typeof(children) ~= 'Instance' then return end
 		local divider = Instance.new('Frame')
 		divider.Name = 'Divider'
 		divider.Size = UDim2.new(1, 0, 0, 1)
@@ -2557,7 +2564,7 @@ components = {
 			label.Name = 'DividerLabel'
 			label.Size = UDim2.fromOffset(218, 27)
 			label.BackgroundTransparency = 1
-			label.Text = '?듼듼듼듼듼듼듼듼듼?..text:upper()
+			label.Text = '          '..text:upper()
 			label.TextXAlignment = Enum.TextXAlignment.Left
 			label.TextColor3 = color.Dark(uipallet.Text, 0.43)
 			label.TextSize = 9
@@ -2738,7 +2745,7 @@ function mainapi:CreateGUI()
 		button.BackgroundColor3 = uipallet.Main
 		button.BorderSizePixel = 0
 		button.AutoButtonColor = false
-		button.Text = '?듼듼듼듼듼듼듼듼듼둚ebind GUI'
+		button.Text = '          Rebind GUI'
 		button.TextXAlignment = Enum.TextXAlignment.Left
 		button.TextColor3 = color.Dark(uipallet.Text, 0.16)
 		button.TextSize = 14
@@ -2826,7 +2833,7 @@ function mainapi:CreateGUI()
 		button.BackgroundColor3 = uipallet.Main
 		button.BorderSizePixel = 0
 		button.AutoButtonColor = false
-		button.Text = (categorysettings.Icon and '?듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼듼? or '?듼듼듼듼듼듼듼듼듼듼듼듼?)..categorysettings.Name
+		button.Text = (categorysettings.Icon and '                                 ' or '             ')..categorysettings.Name
 		button.TextXAlignment = Enum.TextXAlignment.Left
 		button.TextColor3 = color.Dark(uipallet.Text, 0.16)
 		button.TextSize = 14
@@ -2995,7 +3002,7 @@ function mainapi:CreateGUI()
 			toggle.Size = UDim2.new(1, 0, 0, 40)
 			toggle.BackgroundTransparency = 1
 			toggle.AutoButtonColor = false
-			toggle.Text = string.rep('??, 33 * scale.Scale)..togglesettings.Name
+			toggle.Text = string.rep(' ', 33 * scale.Scale)..togglesettings.Name
 			toggle.TextXAlignment = Enum.TextXAlignment.Left
 			toggle.TextColor3 = color.Dark(uipallet.Text, 0.16)
 			toggle.TextSize = 14
@@ -3039,7 +3046,7 @@ function mainapi:CreateGUI()
 			end
 
 			scale:GetPropertyChangedSignal('Scale'):Connect(function()
-				toggle.Text = string.rep('??, 33 * scale.Scale)..togglesettings.Name
+				toggle.Text = string.rep(' ', 33 * scale.Scale)..togglesettings.Name
 			end)
 			toggle.MouseEnter:Connect(function()
 				hovered = true
@@ -3133,7 +3140,7 @@ function mainapi:CreateGUI()
 		button.BackgroundColor3 = uipallet.Main
 		button.BorderSizePixel = 0
 		button.AutoButtonColor = false
-		button.Text = '?듼듼듼듼듼듼듼듼듼?..categorysettings.Name
+		button.Text = '          '..categorysettings.Name
 		button.TextXAlignment = Enum.TextXAlignment.Left
 		button.TextColor3 = color.Dark(uipallet.Text, 0.16)
 		button.TextSize = 14
@@ -3230,7 +3237,7 @@ function mainapi:CreateGUI()
 			window.Size = UDim2.fromOffset(220, 45 + windowlist.AbsoluteContentSize.Y / scale.Scale)
 			for _, v in categoryapi.Buttons do
 				if v.Icon then
-					v.Object.Text = string.rep('??, 33 * scale.Scale)..v.Name
+					v.Object.Text = string.rep(' ', 33 * scale.Scale)..v.Name
 				end
 			end
 		end)
@@ -3731,7 +3738,7 @@ function mainapi:CreateGUI()
 		window.Size = UDim2.fromOffset(220, 42 + windowlist.AbsoluteContentSize.Y / scale.Scale)
 		for _, v in categoryapi.Buttons do
 			if v.Icon then
-				v.Object.Text = string.rep('??, 36 * scale.Scale)..v.Name
+				v.Object.Text = string.rep(' ', 36 * scale.Scale)..v.Name
 			end
 		end
 	end)
@@ -3840,7 +3847,7 @@ function mainapi:CreateCategory(categorysettings)
 		modulebutton.BackgroundColor3 = uipallet.Main
 		modulebutton.BorderSizePixel = 0
 		modulebutton.AutoButtonColor = false
-		modulebutton.Text = '?듼듼듼듼듼듼듼듼듼듼듼?..modulesettings.Name
+		modulebutton.Text = '            '..modulesettings.Name
 		modulebutton.TextXAlignment = Enum.TextXAlignment.Left
 		modulebutton.TextColor3 = color.Dark(uipallet.Text, 0.16)
 		modulebutton.TextSize = 14
@@ -7277,7 +7284,7 @@ guipane:CreateToggle({
 	Tooltip = 'Removes module\'s text spacing',
 	Function = function(callback)
 		for _, v in mainapi.Modules do
-			v.Object.Text = '?듼듼듼듼듼듼듼듼듼듼듼?..(callback and v.Name:gsub(' ', '') or v.Name)
+			v.Object.Text = '            '..(callback and v.Name:gsub(' ', '') or v.Name)
 		end
 	end
 })

@@ -1500,7 +1500,7 @@ components = {
 		toggle.BorderSizePixel = 0
 		toggle.AutoButtonColor = false
 		toggle.Visible = optionsettings.Visible == nil or optionsettings.Visible
-		toggle.Text = string.rep('??, 32)..optionsettings.Name
+		toggle.Text = string.rep(' ', 32)..optionsettings.Name
 		toggle.TextXAlignment = Enum.TextXAlignment.Left
 		toggle.TextColor3 = uipallet.Text
 		toggle.TextSize = 13
@@ -1762,6 +1762,13 @@ components = {
 		return optionapi
 	end,
 	Divider = function(children, text)
+		-- Component factories are exposed through two calling conventions:
+		-- direct calls pass (parent, label), while the generic Create* wrapper
+		-- passes (label, parent, category). Normalize before parenting.
+		if typeof(children) ~= 'Instance' and typeof(text) == 'Instance' then
+			children, text = text, children
+		end
+		if typeof(children) ~= 'Instance' then return end
 		local divider = Instance.new('Frame')
 		divider.Name = 'Divider'
 		divider.Size = UDim2.new(1, 0, 0, 1)
@@ -1773,7 +1780,7 @@ components = {
 			label.Name = 'DividerLabel'
 			label.Size = UDim2.fromOffset(218, 27)
 			label.BackgroundTransparency = 1
-			label.Text = '?듼듼듼듼듼듼듼듼듼?..text:upper()
+			label.Text = '          '..text:upper()
 			label.TextXAlignment = Enum.TextXAlignment.Left
 			label.TextColor3 = color.Dark(uipallet.Text, 0.43)
 			label.TextSize = 9
@@ -2134,7 +2141,7 @@ function mainapi:CreateCategory(categorysettings)
 
 		for i, v in components do
 			moduleapi['Create'..i] = function(self, optionsettings)
-				dotsbutton.Text = '쨌\n쨌\n쨌'
+				dotsbutton.Text = '·\n·\n·'
 				return v(optionsettings, modulechildren, moduleapi)
 			end
 		end
@@ -2455,7 +2462,7 @@ function mainapi:CreateLegit(categorysettings)
 
 		for i, v in components do
 			moduleapi['Create'..i] = function(self, optionsettings)
-				dotsbutton.Text = '쨌\n쨌\n쨌'
+				dotsbutton.Text = '·\n·\n·'
 				return v(optionsettings, settingschildren, moduleapi)
 			end
 		end
